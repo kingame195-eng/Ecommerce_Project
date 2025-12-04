@@ -1,0 +1,329 @@
+.search-filter {
+  /* ↓ background-color: màu nền trắng */
+  background-color: #fff;
+  /* ↑ #fff = #ffffff = trắng thuần */
+
+  /* ↓ padding: khoảng trống bên trong component */
+  padding: 1.5rem;
+  /* ↑ 1.5rem = 1.5 × 16px = 24px padding cả 4 phía */
+  /* ↑ tạo không gian giữa content và biên component */
+
+  /* ↓ border-radius: bo góc */
+  border-radius: 8px;
+  /* ↑ 8px: bo góc tròn 8 pixels (hiện đại, mềm mại) */
+
+  /* ↓ box-shadow: tạo bóng */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* ↑ Giải thích:
+     - 0: dịch chuyển ngang = 0px (bóng thẳng)
+     - 2px: dịch chuyển dọc = 2px (bóng xuống dưới)
+     - 8px: độ mờ (blur) = 8px (tạo bóng mềm)
+     - rgba(0,0,0,0.1): màu đen với độ trong suốt 10%
+     - Kết quả: bóng nhẹ, tạo độ nâng lên 3D */
+
+  /* ↓ margin-bottom: khoảng trống dưới component */
+  margin-bottom: 2rem;
+  /* ↑ 2rem = 2 × 16px = 32px spacing với phần tiếp theo */
+}
+
+/* ================================
+   HEADER SECTION - Phần tiêu đề
+   ================================ */
+.filter-header {
+  /* ↓ margin-bottom: khoảng trống dưới header */
+  margin-bottom: 1.5rem;
+  /* ↑ 1.5rem = 24px spacing giữa header và search box */
+}
+
+.filter-header h3 {
+  /* ↓ margin: xóa margin mặc định của <h3> */
+  margin: 0;
+  /* ↑ margin: 0: loại bỏ margin top + bottom mặc định
+     - Mục đích: kiểm soát spacing chính xác */
+
+  /* ↓ font-size: kích thước chữ */
+  font-size: 1.2rem;
+  /* ↑ 1.2rem = 1.2 × 16px = 19.2px (tiêu đề vừa phải) */
+
+  /* ↓ color: màu chữ */
+  color: #333;
+  /* ↑ #333 = màu xám đậm (gần như đen) */
+  /* ↑ nhìn rõ ràng, không quá sáng/tối */
+}
+
+/* ================================
+   SEARCH BOX SECTION - Phần input tìm kiếm
+   ================================ */
+.search-box {
+  /* ↓ margin-bottom: khoảng trống dưới search box */
+  margin-bottom: 1.5rem;
+  /* ↑ 1.5rem = 24px spacing trước filter section */
+}
+
+/* ================================
+   SEARCH INPUT WRAPPER - Wrapper chứa icon + input + button clear
+   ================================ */
+.search-input-wrapper {
+  /* ↓ position: relative: cho phép child absolute positioning */
+  position: relative;
+  /* ↑ Mục đích: định vị icon (absolute) và button (absolute) 
+     trong wrapper này */
+  /* ↑ Nếu không có position: relative, absolute sẽ relative với body */
+
+  /* ↓ display: flex: hiển thị dạng flexbox (bố cục linh hoạt) */
+  display: flex;
+  /* ↑ Giúp icon, input, button sắp xếp hàng ngang */
+
+  /* ↓ align-items: center: căn chỉnh các item theo trục dọc (vertical center) */
+  align-items: center;
+  /* ↑ Giúp icon X button thẳng hàng với input */
+}
+
+/* ================================
+   SEARCH ICON - Icon kính lúp
+   ================================ */
+.search-icon {
+  /* ↓ position: absolute: định vị tuyệt đối trong wrapper */
+  position: absolute;
+  /* ↑ Mục đích: đặt icon bên trong input (overlay) */
+
+  /* ↓ left: 12px: cách từ lề trái 12px */
+  left: 12px;
+  /* ↑ Đặt icon 12px từ bên trái input */
+
+  /* ↓ color: #999 */
+  color: #999;
+  /* ↑ Màu xám nhạt (không quá nổi bật) */
+
+  /* ↓ pointer-events: none: icon không thể click */
+  pointer-events: none;
+  /* ↑ Vì icon nằm trên input, pointer-events: none giúp:
+     - Click vào icon thực chất click vào input phía sau
+     - Input nhận focus bình thường */
+}
+
+/* ================================
+   SEARCH INPUT - Input field tìm kiếm
+   ================================ */
+.search-input {
+  /* ↓ width: 100%: rộng 100% parent (wrapper) */
+  width: 100%;
+  /* ↑ Stretch full chiều rộng */
+
+  /* ↓ padding: khoảng trống bên trong input */
+  padding: 0.75rem 2.5rem 0.75rem 2.75rem;
+  /* ↑ Giải thích 4 giá trị:
+     - Top: 0.75rem = 12px (khoảng trống trên)
+     - Right: 2.5rem = 40px (khoảng trống phải cho button X)
+     - Bottom: 0.75rem = 12px (khoảng trống dưới)
+     - Left: 2.75rem = 44px (khoảng trống trái cho icon)
+     - Mục đích: icon vào bên trái, button X vào bên phải */
+
+  /* ↓ border: 2px solid #eee */
+  border: 2px solid #eee;
+  /* ↑ Giải thích:
+     - 2px: độ dày viền
+     - solid: kiểu viền liền (không chấm, không đứt)
+     - #eee: màu xám rất nhạt (cạnh nhẹ) */
+
+  /* ↓ border-radius: 5px: bo góc */
+  border-radius: 5px;
+  /* ↑ 5px: bo góc nhẹ (kiểu rounded) */
+
+  /* ↓ font-size: 1rem */
+  font-size: 1rem;
+  /* ↑ 1rem = 16px (kích thước chữ chuẩn) */
+
+  /* ↓ transition: border-color 0.3s ease */
+  transition: border-color 0.3s ease;
+  /* ↑ Giải thích:
+     - transition: hiệu ứng chuyển đổi mượt mà
+     - border-color: thay đổi màu viền
+     - 0.3s: thời gian 0.3 giây
+     - ease: tốc độ chuyển mượt (nhanh → chậm → nhanh)
+     - Mục đích: khi focus, border đổi màu từ từ không giật */
+}
+
+/* ↓ Trạng thái FOCUS của input */
+.search-input:focus {
+  /* ↓ outline: none: xóa outline mặc định */
+  outline: none;
+  /* ↑ Mục đích: loại bỏ đường blue mặc định của browser */
+
+  /* ↓ border-color: #ff6b35: đổi màu viền khi focus */
+  border-color: #ff6b35;
+  /* ↑ #ff6b35: màu cam (brand color) */
+  /* ↑ Mục đích: focus state rõ ràng, user biết đang nhập */
+}
+
+/* ================================
+   CLEAR BUTTON - Nút X xóa tìm kiếm
+   ================================ */
+.clear-btn {
+  /* ↓ position: absolute: định vị tuyệt đối */
+  position: absolute;
+  /* ↑ Mục đích: đặt button bên phải input (overlay) */
+
+  /* ↓ right: 10px: cách từ lề phải 10px */
+  right: 10px;
+  /* ↑ Đặt button 10px từ bên phải input */
+
+  /* ↓ background: none: không có background */
+  background: none;
+  /* ↑ Transparent background, chỉ hiển thị icon X */
+
+  /* ↓ border: none: không có viền */
+  border: none;
+  /* ↑ Loại bỏ viền mặc định của button */
+
+  /* ↓ color: #999: màu icon X */
+  color: #999;
+  /* ↑ Xám nhạt, không quá nổi bật */
+
+  /* ↓ cursor: pointer: con trỏ chuột dạng "bàn tay" */
+  cursor: pointer;
+  /* ↑ Khi hover button, con trỏ đổi thành bàn tay (clickable signal) */
+
+  /* ↓ font-size: 1.2rem: kích thước icon */
+  font-size: 1.2rem;
+  /* ↑ 1.2rem = 19.2px (icon vừa phải, dễ nhấn) */
+
+  /* ↓ transition: color 0.3s ease */
+  transition: color 0.3s ease;
+  /* ↑ Giải thích:
+     - Thay đổi màu icon từ từ
+     - Khi hover: #999 → #ff6b35 (mượt mà) */
+}
+
+/* ↓ Trạng thái HOVER của button X */
+.clear-btn:hover {
+  /* ↓ color: #ff6b35: đổi màu icon khi hover */
+  color: #ff6b35;
+  /* ↑ Đổi thành màu cam (brand color) khi hover */
+  /* ↑ Mục đích: feedback visual rõ ràng cho user */
+}
+
+/* ================================
+   FILTER SECTION - Phần filter + sort
+   ================================ */
+.filter-section {
+  /* ↓ display: grid: hiển thị dạng grid layout */
+  display: grid;
+  /* ↑ Mục đích: bố cục lưới (2 cột: filter danh mục + sort) */
+
+  /* ↓ grid-template-columns: repeat(2, 1fr) */
+  grid-template-columns: repeat(2, 1fr);
+  /* ↑ Giải thích:
+     - repeat(2, 1fr): tạo 2 cột
+     - 1fr: mỗi cột chiếm 1 phần bằng nhau (50% each)
+     - Kết quả: 2 select ngang hàng (danh mục | sắp xếp) */
+
+  /* ↓ gap: 1rem: khoảng trống giữa cột */
+  gap: 1rem;
+  /* ↑ 1rem = 16px spacing giữa filter danh mục và sort */
+}
+
+/* ================================
+   FILTER GROUP - Group chứa label + select
+   ================================ */
+.filter-group {
+  /* ↓ display: flex: hiển thị dạng flexbox */
+  display: flex;
+  /* ↑ Mục đích: sắp xếp label và select dọc (stacked) */
+
+  /* ↓ flex-direction: column: sắp xếp chiều dọc */
+  flex-direction: column;
+  /* ↑ Label trên, select dưới */
+
+  /* ↓ gap: 0.5rem: khoảng trống giữa label và select */
+  gap: 0.5rem;
+  /* ↑ 0.5rem = 8px spacing giữa label và input */
+}
+
+/* ↓ Label trong filter-group */
+.filter-group label {
+  /* ↓ font-weight: 500: độ đậm chữ */
+  font-weight: 500;
+  /* ↑ 500 = semi-bold (đậm hơn 400, nhưng nhẹ hơn 700) */
+  /* ↑ Mục đích: label nổi bật, dễ đọc */
+
+  /* ↓ color: #333: màu xám đậm */
+  color: #333;
+  /* ↑ Màu tương tự header */
+
+  /* ↓ font-size: 0.9rem: kích thước chữ */
+  font-size: 0.9rem;
+  /* ↑ 0.9rem = 14.4px (nhỏ hơn input, phụ) */
+}
+
+/* ================================
+   FILTER SELECT - Select dropdown
+   ================================ */
+.filter-select {
+  /* ↓ padding: 0.5rem 0.75rem: khoảng trống bên trong */
+  padding: 0.5rem 0.75rem;
+  /* ↑ Giải thích:
+     - Top/Bottom: 0.5rem = 8px
+     - Left/Right: 0.75rem = 12px
+     - Mục đích: select không quá chật, dễ nhấn */
+
+  /* ↓ border: 1px solid #ddd: viền */
+  border: 1px solid #ddd;
+  /* ↑ Giải thích:
+     - 1px: viền mỏng hơn input (phụ hơn)
+     - #ddd: xám nhạt */
+
+  /* ↓ border-radius: 5px: bo góc */
+  border-radius: 5px;
+  /* ↑ Tương tự input để thống nhất design */
+
+  /* ↓ font-size: 0.95rem */
+  font-size: 0.95rem;
+  /* ↑ 0.95rem = 15.2px (nhỏ hơn input chút ít) */
+
+  /* ↓ cursor: pointer: con trỏ chuột dạng "bàn tay" */
+  cursor: pointer;
+  /* ↑ Select là clickable element */
+
+  /* ↓ transition: border-color 0.3s ease */
+  transition: border-color 0.3s ease;
+  /* ↑ Tương tự input: hiệu ứng focus mượt */
+}
+
+/* ↓ Trạng thái HOVER và FOCUS của select */
+.filter-select:hover,
+.filter-select:focus {
+  /* ↑ Cả 2 trạng thái dùng cùng styling */
+
+  /* ↓ outline: none: xóa outline mặc định */
+  outline: none;
+  /* ↑ Loại bỏ đường default */
+
+  /* ↓ border-color: #ff6b35: đổi màu viền */
+  border-color: #ff6b35;
+  /* ↑ Tương tự input khi focus */
+}
+
+/* ================================
+   RESPONSIVE DESIGN - Mobile & Tablet
+   ================================ */
+/* Breakpoint: Tablet trở xuống (768px) */
+@media (max-width: 768px) {
+  /* ↓ Cập nhật .search-filter */
+  .search-filter {
+    /* ↓ padding: 1rem: giảm padding trên mobile */
+    padding: 1rem;
+    /* ↑ 1rem = 16px (nhỏ hơn 1.5rem = 24px) */
+    /* ↑ Mục đích: tiết kiệm không gian trên mobile */
+  }
+
+  /* ↓ Cập nhật .filter-section */
+  .filter-section {
+    /* ↓ grid-template-columns: 1fr: đổi thành 1 cột */
+    grid-template-columns: 1fr;
+    /* ↑ Giải thích:
+       - repeat(2, 1fr) → 1fr: từ 2 cột → 1 cột
+       - Kết quả: filter danh mục (full width), sort (full width)
+       - Mục đích: trên mobile, 2 select xếp dọc để dễ tương tác */
+  }
+}
