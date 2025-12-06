@@ -1,36 +1,26 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import {
-  validateRegisterForm,
-  validatePassword,
-  sanitizeInput,
-} from "../utils/validators";
+import { validatePassword } from "../utils/validators";
 import "./Auth.css";
 
-function Register() {
+function ResetPassword() {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [fieldErrors, setFieldErrors] = useState({
-    fullName: "",
-    email: "",
     password: "",
     confirmPassword: "",
   });
 
-  // State cho password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // Get register function
-  const { register, isLoading } = useAuth();
-
-  // Get navigate
+  const { resetUserPassword, isLoading, error } = useAuth();
   const navigate = useNavigate();
 
   // Calculate password strength directly from formData
@@ -38,18 +28,18 @@ function Register() {
     ? validatePassword(formData.password).strength
     : "";
 
-  const handleFormChange = (e) => {
+  useEffect(() => {
+    if (!token) {
+      navigate("/forgot-password");
+    }
+  }, [token, navigate]);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
 
     if (fieldErrors[name]) {
-      setFieldErrors({
-        ...fieldErrors,
-        [name]: "",
-      });
+      setFieldErrors({ ...fieldErrors, [name]: "" });
     }
   };
 
@@ -57,7 +47,7 @@ function Register() {
     switch (passwordStrength) {
       case "strong":
         return "#4caf50";
-      case "medium":
+      case "average":
         return "#ff9800";
       case "weak":
         return "#f44336";
@@ -69,37 +59,30 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFieldErrors({});
-
-    // Validate form
-    const validation = validateRegisterForm(formData);
-
-    if (!validation.isValid) {
-      // Hiển thị errors cho từng field
-      setFieldErrors(validation.errors || {});
+    const passwordValidation = validatePassword(formData.password);
+    if (!passwordValidation.isValid) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        password: passwordValidation.errors.join(". "),
+      }));
       return;
     }
 
-    const sanitizedData = {
-      fullName: sanitizeInput(formData.fullName),
-      email: sanitizeInput(formData.email),
-      password: formData.password,
-    };
+    if (formData.password !== formData.confirmPassword) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
+      return;
+    }
 
-    const result = await register(
-      sanitizedData.email,
-      sanitizedData.password,
-      sanitizedData.fullName
-    );
+    const result = await resetUserPassword({
+      token,
+      newPassword: formData.password,
+    });
 
     if (result.success) {
-      // Clear form
-      setFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-      setTimeout(() => navigate("/verify-email"), 1500);
+      setTimeout(() => navigate("/login"), 1500);
     }
   };
 
@@ -107,54 +90,22 @@ function Register() {
     <main className="auth-page">
       <div className="auth-container">
         <div className="auth-card">
-          <h1>Sign up</h1>
+          <h1>Reset Password</h1>
+
+          {error && <div className="error-message">{error}</div>}
 
           <form onSubmit={handleSubmit} className="auth-form">
+            {/* Password input */}
             <div className="form-group">
-              <label htmlFor="fullName">Full name:</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleFormChange}
-                placeholder="Input your fullname: "
-                disabled={isLoading}
-                className={fieldErrors.fullName ? "input-error" : ""}
-                required
-              />
-              {fieldErrors.fullName && (
-                <span className="field-error">{fieldErrors.fullName}</span>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleFormChange}
-                placeholder="Nhập email"
-                disabled={isLoading}
-                className={fieldErrors.email ? "input-error" : ""}
-                required
-              />
-              {fieldErrors.email && (
-                <span className="field-error">{fieldErrors.email}</span>
-              )}
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password: </label>
+              <label htmlFor="password">New Password:</label>
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   value={formData.password}
-                  onChange={handleFormChange}
-                  placeholder="Enter password (minimum 6 characters)"
+                  onChange={handleChange}
+                  placeholder="Enter new password"
                   disabled={isLoading}
                   className={fieldErrors.password ? "input-error" : ""}
                   required
@@ -163,12 +114,12 @@ function Register() {
                   type="button"
                   className="toggle-password-btn"
                   onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Hide password" : "Show password"}
                   disabled={isLoading}
                 >
                   {showPassword ? "👁️ Hide" : "👁️ Show"}
                 </button>
               </div>
+
               {formData.password && (
                 <div className="password-strength">
                   <div className="strength-bar-wrapper">
@@ -179,7 +130,7 @@ function Register() {
                         width:
                           passwordStrength === "strong"
                             ? "100%"
-                            : passwordStrength === "medium"
+                            : passwordStrength === "average"
                             ? "66%"
                             : "33%",
                       }}
@@ -189,15 +140,17 @@ function Register() {
                     className="strength-text"
                     style={{ color: getStrengthColor() }}
                   >
-                    Password:: {passwordStrength}
+                    Password: {passwordStrength}
                   </span>
                 </div>
               )}
+
               {fieldErrors.password && (
                 <span className="field-error">{fieldErrors.password}</span>
               )}
             </div>
 
+            {/* Confirm password input */}
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirm Password:</label>
               <div className="password-input-wrapper">
@@ -206,8 +159,8 @@ function Register() {
                   id="confirmPassword"
                   name="confirmPassword"
                   value={formData.confirmPassword}
-                  onChange={handleFormChange}
-                  placeholder="Confirm Password:"
+                  onChange={handleChange}
+                  placeholder="Confirm new password"
                   disabled={isLoading}
                   className={fieldErrors.confirmPassword ? "input-error" : ""}
                   required
@@ -216,9 +169,6 @@ function Register() {
                   type="button"
                   className="toggle-password-btn"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  title={
-                    showConfirmPassword ? "Hide password" : "Show password"
-                  }
                   disabled={isLoading}
                 >
                   {showConfirmPassword ? "👁️ Hide" : "👁️ Show"}
@@ -231,17 +181,18 @@ function Register() {
                 </span>
               )}
             </div>
+
+            {/* Submit button */}
             <button type="submit" className="btn-submit" disabled={isLoading}>
               {isLoading && <span className="spinner-mini"></span>}
-              {isLoading ? "Registering..." : "Register"}
+              {isLoading ? "Updating..." : "Reset Password"}
             </button>
           </form>
 
           <div className="auth-links">
             <p>
-              Already have an account?{" "}
               <Link to="/login" className="link">
-                Log
+                Back to login
               </Link>
             </p>
           </div>
@@ -251,4 +202,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default ResetPassword;

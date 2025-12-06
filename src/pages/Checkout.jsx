@@ -1,15 +1,17 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import "./Checkout.css";
 
 function Checkout() {
   const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
+    fullName: user?.fullName || "",
+    email: user?.email || "",
     phone: "",
     address: "",
     city: "",

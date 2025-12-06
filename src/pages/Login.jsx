@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { validateLoginForm } from "../utils/validators";
 import "./Auth.css";
 
 function Login() {
+  const savedEmail = localStorage.getItem("rememberEmail") || "";
+
   const [formData, setFormData] = useState({
-    email: "",
+    email: savedEmail,
     password: "",
   });
 
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(!!savedEmail);
 
   const [fieldErrors, setFieldErrors] = useState({
     email: "",
@@ -20,17 +22,6 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading, error } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("rememberEmail");
-    if (savedEmail) {
-      setFormData((prev) => ({
-        ...prev,
-        email: savedEmail,
-      }));
-      setRememberMe(true);
-    }
-  }, []);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -103,6 +94,7 @@ function Login() {
                   id="password"
                   name="password"
                   value={formData.password}
+                  onChange={handleFormChange}
                   placeholder="Enter your password"
                   disabled={isLoading}
                   className={fieldErrors.password ? "input-error" : ""}

@@ -1,13 +1,22 @@
-import { Link } from "react-router-dom";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { FiUser, FiLogOut } from "react-icons/fi";
 import "./Header.css";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart } = useContext(CartContext);
   const cartCount = cart.length;
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <header className="header">
@@ -26,12 +35,28 @@ function Header() {
           <Link to="/" className="nav-link">
             Contact
           </Link>
-          <Link to="/account" className="nav-link">
-            Account
-          </Link>
-          <Link to="/order-history" className="nav-link">
-            Order History
-          </Link>
+
+          {user ? (
+            <div className="user-menu">
+              <span className="user-name">Hi, {user.fullName}</span>
+              <Link to="/account" className="nav-link">
+                <FiUser /> Account
+              </Link>
+              <button onClick={handleLogout} className="nav-link logout">
+                <FiLogOut /> Logout
+              </button>
+            </div>
+          ) : (
+            <div className="auth-menu">
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+              <Link to="/register" className="nav-link register">
+                Register
+              </Link>
+            </div>
+          )}
+
           <Link to="/cart" className="nav-link cart-link">
             <span className="cart-icon">🛒</span>
             Cart
