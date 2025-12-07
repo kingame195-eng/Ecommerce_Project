@@ -1,6 +1,7 @@
 // Base URL cho tất cả API requests
-// - Khi deploy, thay "https://api.example.com" thành URL server thực tế
-const API_BASE_URL = "https://api.example.com";
+// - Local: "http://localhost:5000/api"
+// - Production: "https://api.example.com"
+const API_BASE_URL = "http://localhost:5000/api";
 
 // Hàm helper để fetch API - xử lý authentication tự động
 // - endpoint: đường dẫn API (ví dụ: "/auth/login")
