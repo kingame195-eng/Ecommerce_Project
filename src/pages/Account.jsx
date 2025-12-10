@@ -1,11 +1,13 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiEdit2, FiLock, FiLogOut } from "react-icons/fi";
 import { AuthContext } from "../context/AuthContext";
 import "./Account.css";
 
 function Account() {
-  // ✅ CORRECT: Get user from AuthContext
-  const { user } = useContext(AuthContext);
+  // ✅ CORRECT: Get user and logout from AuthContext
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // ✅ CORRECT: Initialize with real user data from localStorage
   const [userInfo, setUserInfo] = useState({
@@ -43,7 +45,7 @@ function Account() {
   const handleSaveProfile = async () => {
     // ✅ CORRECT: Call backend API to update profile
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/profile/${user?.id}`, {
+      const response = await fetch(`http://localhost:8000/api/auth/profile/${user?.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -124,8 +126,8 @@ function Account() {
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
-      alert("Logged out!");
-      // Redirect to home or login page
+      logout();
+      navigate("/");
     }
   };
 

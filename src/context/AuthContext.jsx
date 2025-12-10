@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 // Import API function
-const API_BASE_URL = "http://172.16.0.2:5000/api";
+const API_BASE_URL = "http://localhost:8000/api";
 
 // Helper function to fetch API
 const fetchAPI = async (endpoint, options = {}) => {
