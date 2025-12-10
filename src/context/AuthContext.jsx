@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 // Import API function
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://172.16.0.2:5000/api";
 
 // Helper function to fetch API
 const fetchAPI = async (endpoint, options = {}) => {
@@ -144,77 +144,95 @@ export function AuthProvider({ children }) {
     });
   };
 
-  // ❌ NOT IMPLEMENTED YET - Password reset không có backend support
-  // const requestReset = async (email) => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //   setSuccessMessage(null);
-  //
-  //   try {
-  //     if (!email) {
-  //       throw new Error("Please enter email");
-  //     }
-  //     // TODO: Gọi backend /api/auth/forgot-password
-  //     // const response = await fetchAPI("/auth/forgot-password", {
-  //     //   method: "POST",
-  //     //   body: JSON.stringify({ email }),
-  //     // });
-  //     setSuccessMessage("Password reset email has been sent. Please check your inbox.");
-  //     return { success: true };
-  //   } catch (error) {
-  //     setError(error.message);
-  //     return { success: false, error: error.message };
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const requestReset = async (email) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccessMessage(null);
 
-  // ❌ NOT IMPLEMENTED YET - Reset password không có backend support
-  // const resetUserPassword = async (data) => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //   setSuccessMessage(null);
-  //
-  //   try {
-  //     if (!data.token || !data.newPassword) {
-  //       throw new Error("Invalid data");
-  //     }
-  //     // TODO: Gọi backend /api/auth/reset-password
-  //     // const response = await fetchAPI("/auth/reset-password", {
-  //     //   method: "POST",
-  //     //   body: JSON.stringify(data),
-  //     // });
-  //     setSuccessMessage("Password has been changed successfully!");
-  //     return { success: true };
-  //   } catch (error) {
-  //     setError(error.message);
-  //     return { success: false, error: error.message };
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+    try {
+      if (!email) {
+        throw new Error("Please enter email");
+      }
 
-  // ❌ NOT IMPLEMENTED YET - Email verification không có backend support
-  // const verifyEmail = async (token) => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //
-  //   try {
-  //     // TODO: Gọi backend /api/auth/verify-email
-  //     // const response = await fetchAPI("/auth/verify-email", {
-  //     //   method: "POST",
-  //     //   body: JSON.stringify({ token }),
-  //     // });
-  //     setUser({ ...user, isEmailVerified: true });
-  //     setSuccessMessage("Email verified successfully!");
-  //     return { success: true };
-  //   } catch (error) {
-  //     setError(error.message);
-  //     return { success: false, error: error.message };
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      const response = await fetchAPI("/auth/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+
+      setSuccessMessage(
+        response.message || "Password reset email has been sent. Please check your inbox."
+      );
+      return { success: true };
+    } catch (error) {
+      setError(error.message);
+      return { success: false, error: error.message };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetUserPassword = async (data) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      if (!data.token || !data.newPassword) {
+        throw new Error("Invalid data");
+      }
+
+      const response = await fetchAPI("/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({
+          token: data.token,
+          newPassword: data.newPassword,
+          confirmPassword: data.newPassword,
+        }),
+      });
+
+      setSuccessMessage(response.message || "Password has been changed successfully!");
+      return { success: true };
+    } catch (error) {
+      setError(error.message);
+      return { success: false, error: error.message };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyEmail = async (token) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      if (!token) {
+        throw new Error("Invalid verification token");
+      }
+
+      const response = await fetchAPI("/auth/verify-email", {
+        method: "POST",
+        body: JSON.stringify({ token }),
+      });
+
+      // Update user with verified email status
+      if (response.user) {
+        setUser({
+          ...user,
+          ...response.user,
+          token: response.accessToken || response.token,
+          isEmailVerified: true,
+        });
+      }
+
+      setSuccessMessage(response.message || "Email verified successfully!");
+      return { success: true };
+    } catch (error) {
+      setError(error.message);
+      return { success: false, error: error.message };
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const value = {
     user,
     isLoading,
@@ -224,10 +242,9 @@ export function AuthProvider({ children }) {
     login,
     logout,
     updateUser,
-    // ❌ NOT IMPLEMENTED - requestReset, resetUserPassword, verifyEmail
-    // requestReset,
-    // resetUserPassword,
-    // verifyEmail,
+    requestReset,
+    resetUserPassword,
+    verifyEmail,
     isAuthenticated: !!user,
     userRole: user?.role || null,
     isAdmin: user?.role === "admin",

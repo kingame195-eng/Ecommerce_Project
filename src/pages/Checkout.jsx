@@ -56,7 +56,7 @@ function Checkout() {
     // ✅ CORRECT: Submit order to backend API
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch("http://172.16.0.2:5000/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
