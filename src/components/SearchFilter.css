@@ -1,329 +1,368 @@
-.search-filter {
-  /* ↓ background-color: màu nền trắng */
-  background-color: #fff;
-  /* ↑ #fff = #ffffff = trắng thuần */
-
-  /* ↓ padding: khoảng trống bên trong component */
+/* ================================
+   SEARCH FILTER CONTAINER
+   ================================ */
+.search-filter-container {
+  background-color: var(--bg-white);
   padding: 1.5rem;
-  /* ↑ 1.5rem = 1.5 × 16px = 24px padding cả 4 phía */
-  /* ↑ tạo không gian giữa content và biên component */
-
-  /* ↓ border-radius: bo góc */
-  border-radius: 8px;
-  /* ↑ 8px: bo góc tròn 8 pixels (hiện đại, mềm mại) */
-
-  /* ↓ box-shadow: tạo bóng */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  /* ↑ Giải thích:
-     - 0: dịch chuyển ngang = 0px (bóng thẳng)
-     - 2px: dịch chuyển dọc = 2px (bóng xuống dưới)
-     - 8px: độ mờ (blur) = 8px (tạo bóng mềm)
-     - rgba(0,0,0,0.1): màu đen với độ trong suốt 10%
-     - Kết quả: bóng nhẹ, tạo độ nâng lên 3D */
-
-  /* ↓ margin-bottom: khoảng trống dưới component */
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
   margin-bottom: 2rem;
-  /* ↑ 2rem = 2 × 16px = 32px spacing với phần tiếp theo */
 }
 
 /* ================================
-   HEADER SECTION - Phần tiêu đề
+   SEARCH BAR
    ================================ */
-.filter-header {
-  /* ↓ margin-bottom: khoảng trống dưới header */
+.search-bar {
+  display: flex;
+  gap: 0.8rem;
   margin-bottom: 1.5rem;
-  /* ↑ 1.5rem = 24px spacing giữa header và search box */
+}
+
+.search-input-field {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.search-input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.btn-search {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ================================
+   FILTER TOOLBAR
+   ================================ */
+.filter-toolbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sort-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--bg-white);
+  font-family: inherit;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Advanced Filter Panel */
+.advanced-filter-panel {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .filter-header h3 {
-  /* ↓ margin: xóa margin mặc định của <h3> */
+  font-size: 1.3rem;
+  color: var(--text-dark);
   margin: 0;
-  /* ↑ margin: 0: loại bỏ margin top + bottom mặc định
-     - Mục đích: kiểm soát spacing chính xác */
-
-  /* ↓ font-size: kích thước chữ */
-  font-size: 1.2rem;
-  /* ↑ 1.2rem = 1.2 × 16px = 19.2px (tiêu đề vừa phải) */
-
-  /* ↓ color: màu chữ */
-  color: #333;
-  /* ↑ #333 = màu xám đậm (gần như đen) */
-  /* ↑ nhìn rõ ràng, không quá sáng/tối */
+  font-weight: 600;
 }
 
-/* ================================
-   SEARCH BOX SECTION - Phần input tìm kiếm
-   ================================ */
-.search-box {
-  /* ↓ margin-bottom: khoảng trống dưới search box */
-  margin-bottom: 1.5rem;
-  /* ↑ 1.5rem = 24px spacing trước filter section */
-}
-
-/* ================================
-   SEARCH INPUT WRAPPER - Wrapper chứa icon + input + button clear
-   ================================ */
-.search-input-wrapper {
-  /* ↓ position: relative: cho phép child absolute positioning */
-  position: relative;
-  /* ↑ Mục đích: định vị icon (absolute) và button (absolute) 
-     trong wrapper này */
-  /* ↑ Nếu không có position: relative, absolute sẽ relative với body */
-
-  /* ↓ display: flex: hiển thị dạng flexbox (bố cục linh hoạt) */
-  display: flex;
-  /* ↑ Giúp icon, input, button sắp xếp hàng ngang */
-
-  /* ↓ align-items: center: căn chỉnh các item theo trục dọc (vertical center) */
-  align-items: center;
-  /* ↑ Giúp icon X button thẳng hàng với input */
-}
-
-/* ================================
-   SEARCH ICON - Icon kính lúp
-   ================================ */
-.search-icon {
-  /* ↓ position: absolute: định vị tuyệt đối trong wrapper */
-  position: absolute;
-  /* ↑ Mục đích: đặt icon bên trong input (overlay) */
-
-  /* ↓ left: 12px: cách từ lề trái 12px */
-  left: 12px;
-  /* ↑ Đặt icon 12px từ bên trái input */
-
-  /* ↓ color: #999 */
-  color: #999;
-  /* ↑ Màu xám nhạt (không quá nổi bật) */
-
-  /* ↓ pointer-events: none: icon không thể click */
-  pointer-events: none;
-  /* ↑ Vì icon nằm trên input, pointer-events: none giúp:
-     - Click vào icon thực chất click vào input phía sau
-     - Input nhận focus bình thường */
-}
-
-/* ================================
-   SEARCH INPUT - Input field tìm kiếm
-   ================================ */
-.search-input {
-  /* ↓ width: 100%: rộng 100% parent (wrapper) */
-  width: 100%;
-  /* ↑ Stretch full chiều rộng */
-
-  /* ↓ padding: khoảng trống bên trong input */
-  padding: 0.75rem 2.5rem 0.75rem 2.75rem;
-  /* ↑ Giải thích 4 giá trị:
-     - Top: 0.75rem = 12px (khoảng trống trên)
-     - Right: 2.5rem = 40px (khoảng trống phải cho button X)
-     - Bottom: 0.75rem = 12px (khoảng trống dưới)
-     - Left: 2.75rem = 44px (khoảng trống trái cho icon)
-     - Mục đích: icon vào bên trái, button X vào bên phải */
-
-  /* ↓ border: 2px solid #eee */
-  border: 2px solid #eee;
-  /* ↑ Giải thích:
-     - 2px: độ dày viền
-     - solid: kiểu viền liền (không chấm, không đứt)
-     - #eee: màu xám rất nhạt (cạnh nhẹ) */
-
-  /* ↓ border-radius: 5px: bo góc */
-  border-radius: 5px;
-  /* ↑ 5px: bo góc nhẹ (kiểu rounded) */
-
-  /* ↓ font-size: 1rem */
-  font-size: 1rem;
-  /* ↑ 1rem = 16px (kích thước chữ chuẩn) */
-
-  /* ↓ transition: border-color 0.3s ease */
-  transition: border-color 0.3s ease;
-  /* ↑ Giải thích:
-     - transition: hiệu ứng chuyển đổi mượt mà
-     - border-color: thay đổi màu viền
-     - 0.3s: thời gian 0.3 giây
-     - ease: tốc độ chuyển mượt (nhanh → chậm → nhanh)
-     - Mục đích: khi focus, border đổi màu từ từ không giật */
-}
-
-/* ↓ Trạng thái FOCUS của input */
-.search-input:focus {
-  /* ↓ outline: none: xóa outline mặc định */
-  outline: none;
-  /* ↑ Mục đích: loại bỏ đường blue mặc định của browser */
-
-  /* ↓ border-color: #ff6b35: đổi màu viền khi focus */
-  border-color: #ff6b35;
-  /* ↑ #ff6b35: màu cam (brand color) */
-  /* ↑ Mục đích: focus state rõ ràng, user biết đang nhập */
-}
-
-/* ================================
-   CLEAR BUTTON - Nút X xóa tìm kiếm
-   ================================ */
-.clear-btn {
-  /* ↓ position: absolute: định vị tuyệt đối */
-  position: absolute;
-  /* ↑ Mục đích: đặt button bên phải input (overlay) */
-
-  /* ↓ right: 10px: cách từ lề phải 10px */
-  right: 10px;
-  /* ↑ Đặt button 10px từ bên phải input */
-
-  /* ↓ background: none: không có background */
+.btn-close {
   background: none;
-  /* ↑ Transparent background, chỉ hiển thị icon X */
-
-  /* ↓ border: none: không có viền */
   border: none;
-  /* ↑ Loại bỏ viền mặc định của button */
-
-  /* ↓ color: #999: màu icon X */
-  color: #999;
-  /* ↑ Xám nhạt, không quá nổi bật */
-
-  /* ↓ cursor: pointer: con trỏ chuột dạng "bàn tay" */
+  font-size: 1.5rem;
   cursor: pointer;
-  /* ↑ Khi hover button, con trỏ đổi thành bàn tay (clickable signal) */
-
-  /* ↓ font-size: 1.2rem: kích thước icon */
-  font-size: 1.2rem;
-  /* ↑ 1.2rem = 19.2px (icon vừa phải, dễ nhấn) */
-
-  /* ↓ transition: color 0.3s ease */
+  color: var(--text-light);
   transition: color 0.3s ease;
-  /* ↑ Giải thích:
-     - Thay đổi màu icon từ từ
-     - Khi hover: #999 → #ff6b35 (mượt mà) */
-}
-
-/* ↓ Trạng thái HOVER của button X */
-.clear-btn:hover {
-  /* ↓ color: #ff6b35: đổi màu icon khi hover */
-  color: #ff6b35;
-  /* ↑ Đổi thành màu cam (brand color) khi hover */
-  /* ↑ Mục đích: feedback visual rõ ràng cho user */
-}
-
-/* ================================
-   FILTER SECTION - Phần filter + sort
-   ================================ */
-.filter-section {
-  /* ↓ display: grid: hiển thị dạng grid layout */
-  display: grid;
-  /* ↑ Mục đích: bố cục lưới (2 cột: filter danh mục + sort) */
-
-  /* ↓ grid-template-columns: repeat(2, 1fr) */
-  grid-template-columns: repeat(2, 1fr);
-  /* ↑ Giải thích:
-     - repeat(2, 1fr): tạo 2 cột
-     - 1fr: mỗi cột chiếm 1 phần bằng nhau (50% each)
-     - Kết quả: 2 select ngang hàng (danh mục | sắp xếp) */
-
-  /* ↓ gap: 1rem: khoảng trống giữa cột */
-  gap: 1rem;
-  /* ↑ 1rem = 16px spacing giữa filter danh mục và sort */
-}
-
-/* ================================
-   FILTER GROUP - Group chứa label + select
-   ================================ */
-.filter-group {
-  /* ↓ display: flex: hiển thị dạng flexbox */
+  padding: 0;
   display: flex;
-  /* ↑ Mục đích: sắp xếp label và select dọc (stacked) */
+  align-items: center;
+  justify-content: center;
+}
 
-  /* ↓ flex-direction: column: sắp xếp chiều dọc */
+.btn-close:hover {
+  color: var(--text-dark);
+}
+
+.filter-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
   flex-direction: column;
-  /* ↑ Label trên, select dưới */
-
-  /* ↓ gap: 0.5rem: khoảng trống giữa label và select */
-  gap: 0.5rem;
-  /* ↑ 0.5rem = 8px spacing giữa label và input */
+  gap: 0.8rem;
 }
 
-/* ↓ Label trong filter-group */
 .filter-group label {
-  /* ↓ font-weight: 500: độ đậm chữ */
-  font-weight: 500;
-  /* ↑ 500 = semi-bold (đậm hơn 400, nhưng nhẹ hơn 700) */
-  /* ↑ Mục đích: label nổi bật, dễ đọc */
-
-  /* ↓ color: #333: màu xám đậm */
-  color: #333;
-  /* ↑ Màu tương tự header */
-
-  /* ↓ font-size: 0.9rem: kích thước chữ */
-  font-size: 0.9rem;
-  /* ↑ 0.9rem = 14.4px (nhỏ hơn input, phụ) */
-}
-
-/* ================================
-   FILTER SELECT - Select dropdown
-   ================================ */
-.filter-select {
-  /* ↓ padding: 0.5rem 0.75rem: khoảng trống bên trong */
-  padding: 0.5rem 0.75rem;
-  /* ↑ Giải thích:
-     - Top/Bottom: 0.5rem = 8px
-     - Left/Right: 0.75rem = 12px
-     - Mục đích: select không quá chật, dễ nhấn */
-
-  /* ↓ border: 1px solid #ddd: viền */
-  border: 1px solid #ddd;
-  /* ↑ Giải thích:
-     - 1px: viền mỏng hơn input (phụ hơn)
-     - #ddd: xám nhạt */
-
-  /* ↓ border-radius: 5px: bo góc */
-  border-radius: 5px;
-  /* ↑ Tương tự input để thống nhất design */
-
-  /* ↓ font-size: 0.95rem */
+  font-weight: 600;
+  color: var(--text-dark);
   font-size: 0.95rem;
-  /* ↑ 0.95rem = 15.2px (nhỏ hơn input chút ít) */
-
-  /* ↓ cursor: pointer: con trỏ chuột dạng "bàn tay" */
-  cursor: pointer;
-  /* ↑ Select là clickable element */
-
-  /* ↓ transition: border-color 0.3s ease */
-  transition: border-color 0.3s ease;
-  /* ↑ Tương tự input: hiệu ứng focus mượt */
 }
 
-/* ↓ Trạng thái HOVER và FOCUS của select */
-.filter-select:hover,
-.filter-select:focus {
-  /* ↑ Cả 2 trạng thái dùng cùng styling */
+.filter-group select,
+.filter-group input {
+  padding: 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
 
-  /* ↓ outline: none: xóa outline mặc định */
+.filter-group select:focus,
+.filter-group input:focus {
   outline: none;
-  /* ↑ Loại bỏ đường default */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
+}
 
-  /* ↓ border-color: #ff6b35: đổi màu viền */
-  border-color: #ff6b35;
-  /* ↑ Tương tự input khi focus */
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.price-inputs input {
+  flex: 1;
+  padding: 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.price-separator {
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.price-display {
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  background-color: var(--bg-light);
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.price-range-slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  height: 20px;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--border-color);
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: var(--shadow-md);
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.min-slider {
+  z-index: 5;
+}
+
+.max-slider {
+  z-index: 4;
+}
+
+.filter-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.btn-reset,
+.btn-apply {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.btn-reset {
+  background-color: #f5f5f5;
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+}
+
+.btn-reset:hover {
+  background-color: #efefef;
+  border-color: var(--text-dark);
+}
+
+.btn-apply {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+}
+
+.btn-apply:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-advanced-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.btn-advanced-filter:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-advanced-filter.active {
+  background-color: #fff8f0;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 /* ================================
-   RESPONSIVE DESIGN - Mobile & Tablet
+   RESPONSIVE DESIGN
    ================================ */
-/* Breakpoint: Tablet trở xuống (768px) */
 @media (max-width: 768px) {
-  /* ↓ Cập nhật .search-filter */
-  .search-filter {
-    /* ↓ padding: 1rem: giảm padding trên mobile */
+  .search-filter-container {
     padding: 1rem;
-    /* ↑ 1rem = 16px (nhỏ hơn 1.5rem = 24px) */
-    /* ↑ Mục đích: tiết kiệm không gian trên mobile */
   }
 
-  /* ↓ Cập nhật .filter-section */
-  .filter-section {
-    /* ↓ grid-template-columns: 1fr: đổi thành 1 cột */
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .filter-toolbar {
+    flex-direction: column;
+  }
+
+  .sort-select {
+    width: 100%;
+  }
+
+  .btn-advanced-filter {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .advanced-filter-panel {
+    padding: 1.5rem;
+  }
+
+  .filter-body {
     grid-template-columns: 1fr;
-    /* ↑ Giải thích:
-       - repeat(2, 1fr) → 1fr: từ 2 cột → 1 cột
-       - Kết quả: filter danh mục (full width), sort (full width)
-       - Mục đích: trên mobile, 2 select xếp dọc để dễ tương tác */
+    gap: 1.5rem;
+  }
+
+  .filter-footer {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .btn-reset,
+  .btn-apply {
+    width: 100%;
   }
 }
