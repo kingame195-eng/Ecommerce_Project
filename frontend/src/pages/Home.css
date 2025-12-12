@@ -1,0 +1,473 @@
+.home {
+  background-color: var(--bg-light);
+}
+
+/* Hero/Banner section */
+.hero {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  padding: 5rem 2rem;
+  text-align: center;
+  border-radius: 12px;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(255,255,255,0.05)" fill-rule="evenodd"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></svg>')
+    repeat;
+  pointer-events: none;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+  opacity: 0.95;
+}
+
+/* Button chính */
+.btn-primary {
+  background-color: white;
+  color: var(--primary-color);
+  padding: 0.9rem 2.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--bg-light);
+}
+
+/* Section danh sách sản phẩm */
+.products-section {
+  margin-bottom: 4rem;
+}
+
+/* Header của section */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  color: var(--text-dark);
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+}
+
+.section-header p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+/* Grid hiển thị sản phẩm */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* Stats section */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.stat-item h3 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.stat-item p {
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 4rem 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .stat-item h3 {
+    font-size: 2rem;
+  }
+}
+
+/* Responsive - Mobile nhỏ */
+@media (max-width: 480px) {
+  .hero {
+    padding: 2.5rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    padding: 0.8rem 2rem;
+    font-size: 0.95rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-item {
+    padding: 0.5rem;
+  }
+
+  .stat-item h3 {
+    font-size: 1.8rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+.no-results {
+  /* ↓ text-align: center: căn chữ giữa */
+  text-align: center;
+  /* ↑ Mục đích: thông báo "Không tìm thấy" hiển thị ở giữa */
+
+  /* ↓ padding: 3rem 2rem: khoảng trống bên trong */
+  padding: 3rem 2rem;
+  /* ↑ Giải thích:
+     - Top/Bottom: 3rem = 48px (rộng, tạo không gian)
+     - Left/Right: 2rem = 32px
+     - Mục đích: không gian thoáng, dễ nhìn */
+
+  /* ↓ background-color: var(--bg-light): màu nền xám nhạt */
+  background-color: var(--bg-light);
+  /* ↑ Nền xám nhạt để phân biệt với phần khác */
+
+  /* ↓ border-radius: 10px: bo góc */
+  border-radius: 10px;
+  /* ↑ 10px: bo góc tròn (mềm mại) */
+
+  /* ↓ margin: 2rem 0: khoảng trống ngoài */
+  margin: 2rem 0;
+  /* ↑ Giải thích:
+     - Top/Bottom: 2rem = 32px
+     - Left/Right: 0 (không có margin ngang)
+     - Mục đích: spacing giữa products-section và phần khác */
+}
+
+/* ↓ Phần <p> bên trong .no-results */
+.no-results p {
+  /* ↓ font-size: 1.2rem: kích thước chữ */
+  font-size: 1.2rem;
+  /* ↑ 1.2rem = 19.2px (thông báo rõ ràng) */
+
+  /* ↓ color: var(--text-light): màu xám đậm */
+  color: var(--text-light);
+  /* ↑ Màu xám (không đen hoàn toàn, mềm mại) */
+
+  /* ↓ margin-bottom: 1.5rem: khoảng trống dưới chữ */
+  margin-bottom: 1.5rem;
+  /* ↑ 1.5rem = 24px spacing trước button */
+}
+
+/* ================================
+   RESET FILTER BUTTON - Nút "Đặt Lại Bộ Lọc"
+   ================================ */
+.btn-reset-filter {
+  /* ↓ background: linear-gradient(...): gradient nền */
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  /* ↑ Giải thích linear-gradient:
+     - 135deg: góc gradient (135° = từ top-left → bottom-right chéo)
+     - var(--primary-color) 0%: màu bắt đầu (cam sáng) ở vị trí 0%
+     - var(--secondary-color) 100%: màu kết thúc (cam tối) ở vị trí 100%
+     - Kết quả: gradient cam (brand color) từ sáng → tối */
+
+  /* ↓ color: white: màu chữ */
+  color: white;
+  /* ↑ Chữ trắng để tương phản với background cam */
+
+  /* ↓ padding: 0.75rem 2rem: khoảng trống bên trong button */
+  padding: 0.75rem 2rem;
+  /* ↑ Giải thích:
+     - Top/Bottom: 0.75rem = 12px (chiều cao button)
+     - Left/Right: 2rem = 32px (chiều rộng button)
+     - Mục đích: button vừa phải, dễ nhấn */
+
+  /* ↓ border: none: không viền */
+  border: none;
+  /* ↑ Loại bỏ viền mặc định của button */
+
+  /* ↓ border-radius: 5px: bo góc */
+  border-radius: 5px;
+  /* ↑ 5px: bo góc nhẹ (rounded) */
+
+  /* ↓ font-weight: bold: độ đậm chữ */
+  font-weight: bold;
+  /* ↑ Bold: button nổi bật, dễ nhận diện */
+
+  /* ↓ cursor: pointer: con trỏ chuột dạng "bàn tay" */
+  cursor: pointer;
+  /* ↑ Khi hover button, con trỏ đổi → "bàn tay" (clickable signal) */
+
+  /* ↓ transition: transform 0.3s ease, box-shadow 0.3s ease */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* ↑ Giải thích:
+     - transition: hiệu ứng chuyển đổi mượt mà
+     - transform 0.3s ease: animation transform (nâng lên) mất 0.3s
+     - box-shadow 0.3s ease: animation box-shadow (bóng) mất 0.3s
+     - Mục đích: khi hover, button nâng lên + bóng mở ra từ từ */
+}
+
+/* ↓ Trạng thái HOVER của button */
+.btn-reset-filter:hover {
+  /* ↓ transform: translateY(-2px): di chuyển lên trên */
+  transform: translateY(-2px);
+  /* ↑ Giải thích:
+     - translateY(-2px): dịch chuyển dọc (Y-axis)
+     - -2px: âm = di chuyển lên (positive = xuống)
+     - Kết quả: button nâng lên 2px khi hover (3D effect) */
+
+  /* ↓ box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3) */
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  /* ↑ Giải thích:
+     - 0: dịch chuyển ngang = 0px
+     - 4px: dịch chuyển dọc = 4px (bóng dưới)
+     - 12px: độ mờ (blur) = 12px
+     - rgba(255,107,53,0.3): màu cam (brand color) với độ trong 30%
+     - Kết quả: bóng cam nhạt dưới button khi hover */
+}
+
+/* ================================
+   RESULT COUNT - Hiển thị số lượng sản phẩm
+   ================================ */
+.result-count {
+  /* ↓ font-size: 0.9rem: kích thước chữ */
+  font-size: 0.9rem;
+  /* ↑ 0.9rem = 14.4px (nhỏ hơn h2, phụ) */
+
+  /* ↓ color: #ff6b35: màu cam (brand color) */
+  color: #ff6b35;
+  /* ↑ Màu cam để nhân mạnh số lượng sản phẩm */
+
+  /* ↓ font-weight: normal: độ đậm bình thường */
+  font-weight: normal;
+  /* ↑ Trong <h2>, font-weight mặc định là bold
+     normal: loại bỏ bold, chữ "500+ sản phẩm" nhẹ hơn tiêu đề */
+
+  /* ↓ margin-left: 0.5rem: khoảng trống trái */
+  margin-left: 0.5rem;
+  /* ↑ 0.5rem = 8px spacing giữa "Sản Phẩm Nổi Bật" và "(500+ sản phẩm)" */
+}
+
+/* ================================
+   RESPONSIVE DESIGN - Mobile & Tablet
+   ================================ */
+/* Breakpoint: Tablet trở xuống (768px) */
+@media (max-width: 768px) {
+  /* ↓ Cập nhật .no-results */
+  .no-results {
+    /* ↓ padding: 2rem 1rem: giảm padding trên mobile */
+    padding: 2rem 1rem;
+    /* ↑ Giải thích:
+       - Top/Bottom: 2rem = 32px (giảm từ 3rem = 48px)
+       - Left/Right: 1rem = 16px (giảm từ 2rem = 32px)
+       - Mục đích: tiết kiệm không gian trên mobile */
+  }
+
+  /* ↓ Cập nhật .btn-reset-filter */
+  .btn-reset-filter {
+    /* ↓ padding: 0.6rem 1.5rem: giảm kích thước button */
+    padding: 0.6rem 1.5rem;
+    /* ↑ Giải thích:
+       - Top/Bottom: 0.6rem = 9.6px (giảm từ 0.75rem = 12px)
+       - Left/Right: 1.5rem = 24px (giảm từ 2rem = 32px)
+       - Mục đích: button nhỏ hơn, phù hợp mobile */
+
+    /* ↓ font-size: 0.95rem: giảm kích thước chữ */
+    font-size: 0.95rem;
+    /* ↑ 0.95rem = 15.2px (phù hợp mobile, không quá lớn) */
+  }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.1rem;
+  color: var(--text-light);
+  animation: fadeIn 0.3s ease;
+}
+
+.loading-spinner::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error Message */
+.error-message {
+  padding: 2rem;
+  background-color: #ffebee;
+  border-left: 4px solid #ff6b35;
+  border-radius: 8px;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.error-message p {
+  color: #c62828;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.error-message button {
+  padding: 0.7rem 1.5rem;
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.error-message button:hover {
+  background-color: #ff5722;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Product Count Badge */
+.product-count {
+  font-weight: normal;
+  color: var(--primary-color);
+  margin-left: 0.5rem;
+  font-size: 0.85em;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .loading-spinner {
+    padding: 2rem 1rem;
+  }
+
+  .error-message {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+}

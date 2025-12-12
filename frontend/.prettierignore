@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+.next
+.git
+*.min.js
+*.min.css
+package-lock.json
+yarn.lock
+.env
+.env.local
+.DS_Store
+coverage
+.prisma
