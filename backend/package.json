@@ -1,0 +1,30 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "node prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "@prisma/client": "^4.16.2",
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "bcryptjs": "2.4.3",
+    "jsonwebtoken": "9.0.2",
+    "axios": "1.5.0",
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {
+    "prisma": "^4.16.2",
+    "nodemon": "^3.0.1"
+  }
+}

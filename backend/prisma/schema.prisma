@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+// ============ MODELS ============
+
+model User {
+  id                Int     @id @default(autoincrement())
+  name              String
+  email             String  @unique
+  password          String
+  phone             String?
+  address           String?
+  role              String  @default("user") // "user" hoặc "admin"
+  isEmailVerified   Boolean @default(false) // ✨ NEW: Email verification flag
+
+  // Relations
+  orders                Order[]
+  reviews               Review[]
+  wishlist              WishlistItem[]
+  verificationTokens    VerificationToken[] // ✨ NEW: Email verification tokens
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users") // Tên bảng trong database
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  image       String?
+  category    String?
+  stock       Int     @default(0)
+  rating      Float   @default(0)
+
+  // Relations
+  orderItems  OrderItem[]
+  reviews     Review[]
+  wishlist    WishlistItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Order {
+  id            Int     @id @default(autoincrement())
+  userId        Int
+  totalPrice    Float
+  status        String  @default("pending") // pending, processing, shipped, delivered
+  shippingAddress String?
+
+  // Relations
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items         OrderItem[]
+  payment       Payment?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("orders")
+  @@index([userId]) // Index để query nhanh
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float   // Giá tại thời điểm mua
+
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("order_items")
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Review {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+  rating    Int     // 1-5 stars
+  comment   String?
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+  @@unique([userId, productId]) // Mỗi user chỉ review 1 lần/product
+  @@index([userId])
+  @@index([productId])
+}
+
+model WishlistItem {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("wishlist_items")
+  @@unique([userId, productId]) // Tránh duplicate
+  @@index([userId])
+}
+
+model Payment {
+  id        Int     @id @default(autoincrement())
+  orderId   Int     @unique
+  amount    Float
+  method    String  // credit_card, paypal, bank_transfer
+  status    String  @default("pending") // pending, completed, failed
+
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}
+
+// ✨ NEW: Email Verification & Password Reset Tokens
+model VerificationToken {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  email     String  // Email to verify
+  token     String  @unique // Unique verification token
+  type      String  // "email_verification" or "password_reset"
+  expiresAt DateTime // Token expiration time (15 minutes)
+  isUsed    Boolean @default(false) // Mark as used after first use
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("verification_tokens")
+  @@index([userId])
+  @@index([token]) // Fast token lookup
+  @@index([expiresAt]) // Fast expiration check
+}
