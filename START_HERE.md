@@ -4,9 +4,9 @@
 
 ### 📖 For Developers
 
-1. **[ERRORS_FIXED_SUMMARY.md](ERRORS_FIXED_SUMMARY.md)** - What was broken and how it was fixed
-2. **[FINAL_STATUS.md](FINAL_STATUS.md)** - Current project status and readiness
-3. **[SETUP_AND_TESTING_GUIDE.md](SETUP_AND_TESTING_GUIDE.md)** - How to test everything
+1. **[Final Status](docs/FINAL_STATUS.md)** - Current project status and readiness
+2. **[Setup & Testing Guide](docs/SETUP_AND_TESTING_GUIDE.md)** - How to test everything
+3. **[Email Service Guide](docs/EMAIL_SERVICE_GUIDE.md)** - Email configuration setup
 
 ### 📊 Implementation Guides
 

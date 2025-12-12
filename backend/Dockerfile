@@ -36,7 +36,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY . .
 
 # Expose port
-EXPOSE 5000
+EXPOSE 8000
 
 # Start server
 CMD ["npm", "start"]
