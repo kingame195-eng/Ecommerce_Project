@@ -26,6 +26,7 @@ A full-stack e-commerce web application built with modern technologies for selli
 ## 🛠 Tech Stack
 
 ### Backend
+
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Database**: PostgreSQL
@@ -34,6 +35,7 @@ A full-stack e-commerce web application built with modern technologies for selli
 - **Email**: Nodemailer
 
 ### Frontend
+
 - **Framework**: React.js
 - **Build Tool**: Vite
 - **State Management**: Context API
@@ -42,6 +44,7 @@ A full-stack e-commerce web application built with modern technologies for selli
 - **Routing**: React Router
 
 ### DevOps
+
 - **Containerization**: Docker & Docker Compose
 - **Version Control**: Git
 
@@ -115,12 +118,14 @@ MyShop_Project/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/kingame195-eng/MyShop_Project.git
    cd MyShop_Project
    ```
 
 2. **Setup Backend**
+
    ```bash
    cd backend
    npm install
@@ -137,6 +142,7 @@ MyShop_Project/
 ### Environment Variables
 
 #### Backend (.env.local)
+
 ```
 DATABASE_URL=postgresql://user:password@localhost:5432/ecommerce
 JWT_SECRET=your_jwt_secret_key
@@ -150,6 +156,7 @@ PORT=8000
 ```
 
 #### Frontend (.env.local)
+
 ```
 VITE_API_URL=http://localhost:8000/api
 ```
@@ -159,6 +166,7 @@ VITE_API_URL=http://localhost:8000/api
 ### Run Locally (Without Docker)
 
 **Terminal 1 - Backend:**
+
 ```bash
 cd backend
 npm run dev
@@ -166,12 +174,14 @@ npm run dev
 ```
 
 **Terminal 2 - Frontend:**
+
 ```bash
 cd frontend
 npm run dev
 ```
 
 Access the application at:
+
 - Frontend: http://localhost:5173
 - Backend: http://localhost:8000
 - API: http://localhost:8000/api
@@ -183,6 +193,7 @@ docker-compose up --build
 ```
 
 This will start:
+
 - PostgreSQL on port 5432
 - Backend on port 8000
 - Frontend on port 5173
@@ -202,6 +213,7 @@ npm test
 ## 📦 Deployment
 
 ### Using Docker Compose
+
 ```bash
 scripts/deploy.sh          # Linux/Mac
 scripts/deploy.bat         # Windows
@@ -210,12 +222,14 @@ scripts/deploy.bat         # Windows
 ### Manual Deployment
 
 1. **Build images**
+
    ```bash
    docker build -t myshop-backend ./backend
    docker build -t myshop-frontend ./frontend
    ```
 
 2. **Push to registry** (Docker Hub, ECR, etc.)
+
    ```bash
    docker tag myshop-backend your-registry/myshop-backend:latest
    docker push your-registry/myshop-backend:latest
@@ -245,6 +259,7 @@ For detailed documentation, see the [docs/](docs/) folder:
 ## 📝 API Documentation
 
 ### Authentication Endpoints
+
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
 - `POST /api/auth/verify-email` - Verify email
@@ -252,11 +267,13 @@ For detailed documentation, see the [docs/](docs/) folder:
 - `POST /api/auth/reset-password` - Reset password with token
 
 ### Product Endpoints
+
 - `GET /api/products` - Get all products with pagination
 - `GET /api/products/:id` - Get product details
 - `GET /api/products/search` - Search products
 
 ### Order Endpoints
+
 - `POST /api/orders` - Create new order
 - `GET /api/orders` - Get user orders
 - `GET /api/orders/:id` - Get order details
@@ -276,11 +293,13 @@ This project is licensed under the MIT License - see LICENSE file for details.
 ## 👨‍💻 Author
 
 **kingame195-eng**
+
 - GitHub: [@kingame195-eng](https://github.com/kingame195-eng)
 
 ## 📞 Support
 
 For issues and questions:
+
 - Create an issue on [GitHub Issues](https://github.com/kingame195-eng/MyShop_Project/issues)
 - Contact via email
 
