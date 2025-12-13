@@ -7,6 +7,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000
 // Helper function to fetch API
 const fetchAPI = async (endpoint, options = {}) => {
   const user = JSON.parse(localStorage.getItem("user"));
+  
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
