@@ -315,5 +315,3 @@ For issues and questions:
 - [ ] Dark mode
 
 ---
-
-**Last Updated**: December 12, 2025
